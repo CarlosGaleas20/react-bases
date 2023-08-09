@@ -9,6 +9,7 @@ export const ProductTitle = ({ title, className, style }: { title?: string, clas
     return (
         <span className={`${styles.productDescription} ${className}`} style={style}>{
             title ? title : product.title
-        }</span>
+        }
+        </span>
     );
 }

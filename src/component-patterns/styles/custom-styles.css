@@ -21,3 +21,9 @@
     border-bottom: 1px solid #fff;
     border-top: 1px solid #fff;
 }
+
+.shopping-cart {
+    position: fixed;
+    right: 10px;
+    top: 0;
+}
