@@ -4,29 +4,26 @@ import '../styles/custom-styles.css';
 import { useShoppingCart } from '../hooks/useShoppingCart';
 import { products } from '../data/products';
 
-const ShoppingPage = () => {
+const product = products[0];
 
-    const { shoppingCart, onProductCartChange } = useShoppingCart();
+const ShoppingPage = () => {
 
     return (
         <div>
             <h1>Shopping Store</h1>
             <hr />
-            <div style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: '1rem',
-            }}>
-
+            <ProductCard
+                key={product.id}
+                product={product}
+                className='bg-dark text-white'
+                initialValues={{
+                    count: 4,
+                    maxCount: 10,
+                }}
+            >
                 {
-                    products.map(product => (
-                        <ProductCard
-                            key={product.id}
-                            product={product}
-                            className='bg-dark text-white'
-                            value={shoppingCart[product.id]?.counter || 0}
-                            onChange={onProductCartChange}
-                        >
+                    ( { count, isMaxCountReached, maxCount, increaseBy, reset } ) => (
+                        <>
                             <ProductImage className='custom-image' />
 
                             <ProductTitle
@@ -37,30 +34,16 @@ const ShoppingPage = () => {
                             />
 
                             <ProductButtons className='custom-buttons' />
-                        </ProductCard>
-                    ))
+                            <button onClick={reset}>Reset</button>
+                            {
+                                !isMaxCountReached && (<button onClick={() => increaseBy(+2)}>+2</button>)
+                            }
+                            <button onClick={() => increaseBy(-2)}>-2</button>
+                            <span>{count}</span>
+                        </>
+                    )
                 }
-
-                <div className='shopping-cart'>
-                    {Object.keys(shoppingCart).map(id => (
-                        <ProductCard
-                            key={id}
-                            product={shoppingCart[id]}
-                            style={{
-                                width: '250px',
-                            }}
-                            value={shoppingCart[id].counter}
-                            onChange={onProductCartChange}
-                        >
-                            <ProductImage />
-
-                            <ProductTitle />
-
-                            <ProductButtons />
-                        </ProductCard>
-                    ))}
-                </div>
-            </div>
+            </ProductCard>
         </div>
     )
 }
